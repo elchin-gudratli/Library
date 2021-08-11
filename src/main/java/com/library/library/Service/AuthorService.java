@@ -29,4 +29,6 @@ public interface AuthorService {
 	
 	ResponseEntity<Author> findByName(String name);
 
+	ResponseEntity getAllAuthorBook(int pageNo, int pageSize);
+
 }

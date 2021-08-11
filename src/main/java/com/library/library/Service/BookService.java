@@ -10,6 +10,7 @@ import com.library.library.Entity.Book;
 
 
 public interface BookService {
+	
 	ResponseEntity<List<Book>> getAllBook(String name);
 	
 	ResponseEntity<List<Book>> getAuthor(Integer id);

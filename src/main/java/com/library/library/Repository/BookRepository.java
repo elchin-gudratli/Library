@@ -6,8 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
-import com.library.library.Entity.Author_Book;
 import com.library.library.Entity.Book;
 
 @Repository
@@ -26,5 +24,9 @@ public interface BookRepository extends JpaRepository<Book, Integer>{
 	
 	@Query(value="select n from Book n where n.id=:bookId")
 	List<Book> findAllByBookId(@Param("bookId") Integer id);
+
+	@Query("Select count(id) from Book")
+	Long totalCount();
+	
 	
 }

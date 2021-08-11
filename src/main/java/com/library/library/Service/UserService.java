@@ -10,10 +10,11 @@ import com.library.library.Entity.User;
 
 public interface UserService {
 
-	
 	ResponseEntity<List<User>> getAllUserBook();
     
 	ResponseEntity<List<User>> getAllUser();
+	
+	ResponseEntity getAllUserBook(int pageNo, int pageSize);
 	
     User getById(Integer id);
     

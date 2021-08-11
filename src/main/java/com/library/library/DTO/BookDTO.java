@@ -2,9 +2,6 @@ package com.library.library.DTO;
 
 import java.util.List;
 
-import javax.persistence.ManyToMany;
-
-
 public class BookDTO {
 	
 	private Integer id;

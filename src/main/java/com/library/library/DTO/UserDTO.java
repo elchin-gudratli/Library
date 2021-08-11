@@ -10,8 +10,6 @@ public class UserDTO {
 	
 	private List<BookDTO> books;
 	
-	
-	
 	public Integer getId() {
 		return id;
 	}
@@ -37,6 +35,4 @@ public class UserDTO {
 		this.books = books;
 	}
 	
-	
-
 }

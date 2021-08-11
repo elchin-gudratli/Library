@@ -32,5 +32,4 @@ public class Author_BookDTO {
 		this.books = books;
 	}
 
-
 }

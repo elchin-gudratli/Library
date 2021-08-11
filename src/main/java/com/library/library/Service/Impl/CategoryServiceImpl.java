@@ -3,17 +3,12 @@ package com.library.library.Service.Impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import com.library.library.DTO.BookDTO;
 import com.library.library.DTO.CategoryDTO;
-import com.library.library.Entity.Book;
 import com.library.library.Entity.Category;
 import com.library.library.Repository.BookRepository;
 import com.library.library.Repository.CategoryRepository;
@@ -37,24 +32,18 @@ public class CategoryServiceImpl implements CategoryService{
 	@Override
 	public ResponseEntity getAllCategory() {
 		List<Category> list = categoryRepository.findAll();
-		List<CategoryDTO> ctgList=new ArrayList<>();
-		
-		if(list != null && list.size()>0 ) {
-			
-			for(Category c : list) {
+		List<CategoryDTO> ctgList = new ArrayList<>();
+		if (list != null && list.size() > 0) {
+			for (Category c : list) {
 				CategoryDTO categoryDTO = new CategoryDTO();
 				categoryDTO.setId(c.getId());
 				categoryDTO.setName(c.getName());
-				
-				
 				ctgList.add(categoryDTO);
 			}
 			return ResponseEntity.ok(ctgList);
-		}
-		else{
+		} else {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
-		
 	}
 
 	@Override
@@ -72,8 +61,8 @@ public class CategoryServiceImpl implements CategoryService{
 
 	@Override
 	public ResponseEntity<Category> delete(Integer id) {
-		Optional<Category> categoryOptional=categoryRepository.findById(id);
-		if (categoryOptional.isPresent()){
+		Optional<Category> categoryOptional = categoryRepository.findById(id);
+		if (categoryOptional.isPresent()) {
 			categoryRepository.deleteById(id);
 			return ResponseEntity.ok(categoryOptional.get());
 		}
@@ -88,10 +77,7 @@ public class CategoryServiceImpl implements CategoryService{
 		} else {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
-			categoryRepository.save(category);
-
-			return ResponseEntity.ok(category);
-
+		categoryRepository.save(category);
+		return ResponseEntity.ok(category);
 	}
-
 }

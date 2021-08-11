@@ -1,11 +1,11 @@
 package com.library.library.Service.Impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -43,21 +43,19 @@ public class AuthorServiceImpl implements AuthorService {
 
 	@Override
 	public ResponseEntity<List<Author>> getAllAuthor() {
-		List<Author> list=authorRepository.findAll();
-		
-		if(list != null && list.size()>0) {
+		List<Author> list = authorRepository.findAll();
+		if (list != null && list.size() > 0) {
 			return ResponseEntity.ok(list);
-		}else {
+		} else {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
-		
+
 	}
 
 	@Override
 	public ResponseEntity getAllAuthorBook() {
 		List<Author> list = authorRepository.findAll();
 		List<AuthorDTO> aList = new ArrayList<>();
-
 		if (list != null && list.size() > 0) {
 			for (Author l : list) {
 				AuthorDTO authorDTO = new AuthorDTO();
@@ -70,7 +68,6 @@ public class AuthorServiceImpl implements AuthorService {
 					BookDTO bDTO = new BookDTO();
 					bDTO.setId(b.getBook_id().getId());
 					bDTO.setName(b.getBook_id().getName());
-
 					List<Category> ctList = categoryRepository.findAllByBookId(b.getBook_id().getCategory().getId());
 					List<CategoryDTO> ctgList = new ArrayList();
 					for (Category c : ctList) {
@@ -98,7 +95,6 @@ public class AuthorServiceImpl implements AuthorService {
 		author.setName(authorDTO.getName());
 		author.setSurname(authorDTO.getSurname());
 		authorRepository.save(author);
-
 		return ResponseEntity.ok(author);
 	}
 
@@ -141,19 +137,17 @@ public class AuthorServiceImpl implements AuthorService {
 	public ResponseEntity getAuthorBooksDetail(Integer id) {
 		Author author = authorRepository.getAuthorDetail(id);
 		List<AuthorDTO> aList = new ArrayList<>();
-		if(author != null){
+		if (author != null) {
 			AuthorDTO aDTO = new AuthorDTO();
 			aDTO.setId(author.getId());
 			aDTO.setName(author.getName());
 			aDTO.setSurname(author.getSurname());
-			
 			List<Author_Book> authorList = author_book_repository.findAllByBookId(author.getId());
 			List<BookDTO> bDTOList = new ArrayList<>();
-			for(Author_Book b : authorList) {
-				BookDTO bDTO=new BookDTO();
+			for (Author_Book b : authorList) {
+				BookDTO bDTO = new BookDTO();
 				bDTO.setId(b.getBook_id().getId());
 				bDTO.setName(b.getBook_id().getName());
-				
 				List<Category> ctList = categoryRepository.findAllByBookId(b.getBook_id().getCategory().getId());
 				List<CategoryDTO> ctgList = new ArrayList();
 				for (Category c : ctList) {
@@ -161,7 +155,6 @@ public class AuthorServiceImpl implements AuthorService {
 					ctgDTO.setId(c.getId());
 					ctgDTO.setName(c.getName());
 					ctgList.add(ctgDTO);
-
 				}
 				bDTO.setCategories(ctgList);
 				bDTOList.add(bDTO);
@@ -169,11 +162,10 @@ public class AuthorServiceImpl implements AuthorService {
 			aDTO.setBooks(bDTOList);
 			aList.add(aDTO);
 			return ResponseEntity.ok(aList);
-			}else {
-				return ResponseEntity.noContent().build();
-			}
-			
+		} else {
+			return ResponseEntity.noContent().build();
 		}
+	}
 		
 		@Override
 		public ResponseEntity<Author> delete(Integer id) {
@@ -200,5 +192,46 @@ public class AuthorServiceImpl implements AuthorService {
 			return ResponseEntity.ok(authorRepository.findAll(pageable).getContent());
 		}
 
+		@Override
+		public ResponseEntity getAllAuthorBook(int pageNo, int pageSize) {
+			Pageable pageable = PageRequest.of(pageNo, pageSize);
+			List<Author> list = authorRepository.findAll(pageable).getContent();
+			Long totalCount = authorRepository.totalCount();
+			Map mapAuthor = new HashMap<>();
+			List<AuthorDTO> aList = new ArrayList<>();
+			if (list != null && list.size() > 0) {
+				for (Author l : list) {
+					AuthorDTO authorDTO = new AuthorDTO();
+					authorDTO.setId(l.getId());
+					authorDTO.setName(l.getName());
+					authorDTO.setSurname(l.getSurname());
+					List<Author_Book> authorList = author_book_repository.findAllByBookId(l.getId());
+					List<BookDTO> bDTOList = new ArrayList<>();
+					for (Author_Book b : authorList) {
+						BookDTO bDTO = new BookDTO();
+						bDTO.setId(b.getBook_id().getId());
+						bDTO.setName(b.getBook_id().getName());
+						List<Category> ctList = categoryRepository
+								.findAllByBookId(b.getBook_id().getCategory().getId());
+						List<CategoryDTO> ctgList = new ArrayList();
+						for (Category c : ctList) {
+							CategoryDTO ctgDTO = new CategoryDTO();
+							ctgDTO.setId(c.getId());
+							ctgDTO.setName(c.getName());
+							ctgList.add(ctgDTO);
+						}
+						bDTO.setCategories(ctgList);
+						bDTOList.add(bDTO);
+					}
+					authorDTO.setBooks(bDTOList);
+					aList.add(authorDTO);
+				}
+				mapAuthor.put("list", aList);
+				mapAuthor.put("totalCount", totalCount);
+			}
+			return ResponseEntity.ok(mapAuthor);
+		}
+	}
 
-}
+
+

@@ -2,8 +2,6 @@ package com.library.library.DTO;
 
 import java.util.List;
 
-import lombok.Data;
-
 
 public class AuthorDTO {
 	
@@ -38,5 +36,4 @@ public class AuthorDTO {
 		this.books = books;
 	}
 	
-
 }

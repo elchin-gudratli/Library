@@ -42,4 +42,5 @@ public class CategoryController {
 	public ResponseEntity<Category> updateCategory(@PathVariable Integer id, @RequestBody CategoryDTO categoryDTO){
 		return categoryService.updateCategory(id, categoryDTO);
 	}
+	
 }

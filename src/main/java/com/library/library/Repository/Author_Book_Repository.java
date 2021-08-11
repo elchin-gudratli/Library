@@ -6,9 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
-import com.library.library.DTO.AuthorDTO;
-import com.library.library.Entity.Author;
 import com.library.library.Entity.Author_Book;
 import com.library.library.Entity.Book;
 
@@ -16,7 +13,6 @@ import com.library.library.Entity.Book;
 @Repository
 public interface Author_Book_Repository extends JpaRepository<Author_Book, Integer>{
 
-	
 	@Query(value="select a from Author_Book a where a.book_id.id=:Id")
 	List<Author_Book> findAllByAuthorId(@Param("Id") Integer id);
 	

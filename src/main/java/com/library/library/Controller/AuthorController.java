@@ -42,6 +42,10 @@ public class AuthorController {
 	public ResponseEntity<List<Author>> getAllAuthor(@RequestParam int pageNo,@RequestParam int pageSize){
 		return authorService.getAllAuthor(pageNo,pageSize);	
 	}
+	@GetMapping("getAuthorBooksPage")
+	public ResponseEntity<List<Author>> getAllAuthorBook(@RequestParam int pageNo,@RequestParam int pageSize){
+		return authorService.getAllAuthorBook(pageNo,pageSize);	
+	}
 	@GetMapping("/authorProfile/{id}")
 	public ResponseEntity<Author> getProfileAuthor(@PathVariable Integer id){
 		return authorService.getAuthorDetail(id);	
@@ -67,6 +71,4 @@ public class AuthorController {
 		return authorService.updateAuthor(id, authorDTO);
 	}
 	
-	
-
 }

@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.library.library.DTO.UserDTO;
-import com.library.library.Entity.Book;
 import com.library.library.Entity.User;
 import com.library.library.Service.UserService;
 
@@ -41,6 +40,11 @@ public class UserController {
 		return userService.getAllUserBook();
 	}
 	
+	@GetMapping("getAllPage")
+	public ResponseEntity<List<User>> getAllUserBook(@RequestParam int pageNo,@RequestParam int pageSize){
+		return userService.getAllUserBook(pageNo,pageSize);
+	}
+	
 	@PostMapping("/addUser")
 	public ResponseEntity<User> addUserPost(@RequestBody UserDTO userDTO){
 		return userService.addUser(userDTO);
@@ -61,7 +65,5 @@ public class UserController {
 	public ResponseEntity<User> getProfileUserBook(@PathVariable Integer id){
 		return userService.getUserBookDetail(id);
 	}
-	
-	
 	
 }

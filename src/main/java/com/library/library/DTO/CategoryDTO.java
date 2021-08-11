@@ -1,7 +1,5 @@
 package com.library.library.DTO;
 
-import java.util.List;
-
 public class CategoryDTO {
 
 	private Integer id;
@@ -22,5 +20,4 @@ public class CategoryDTO {
 		this.name = name;
 	}
 
-	
 }
